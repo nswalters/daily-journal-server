@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from entries import get_all_entries
+from entries import get_all_entries, get_single_entry
 import json
 
 # from animals import create_animal, delete_animal, get_all_animals, get_animals_by_location, get_animals_by_status, get_single_animal, update_animal
@@ -67,7 +67,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             if resource == 'entries':
                 if id is not None:
-                    #   response = f"{get_single_entry(id)}"
+                    response = f"{get_single_entry(id)}"
                     pass
                 else:
                     response = f"{get_all_entries()}"
