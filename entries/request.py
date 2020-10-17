@@ -94,7 +94,6 @@ def get_entry_by_query(query):
         dataset = db_cursor.fetchall()
 
         for row in dataset:
-            print(row)
             entry = Entry(row['id'], row['concept'],
                           row['entry'], row['date'], row['moodId'])
 
