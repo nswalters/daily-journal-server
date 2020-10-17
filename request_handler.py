@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from entries import get_all_entries, get_single_entry
+from entries import delete_entry, get_all_entries, get_single_entry
 import json
 
 # from animals import create_animal, delete_animal, get_all_animals, get_animals_by_location, get_animals_by_status, get_single_animal, update_animal
@@ -166,17 +166,11 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         (resource, id) = self.parse_url(self.path)
 
-        if resource == "animals":
-            delete_animal(id)
+        if resource == "entries":
+            delete_entry(id)
 
-        if resource == "locations":
-            delete_location(id)
-
-        if resource == "employees":
-            delete_employee(id)
-
-        if resource == "customers":
-            delete_customer(id)
+        # if resource == "locations":
+        #     delete_location(id)
 
         self.wfile.write("".encode())
 

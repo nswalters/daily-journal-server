@@ -59,3 +59,13 @@ def get_all_entries():
             entries.append(entry.__dict__)
 
     return json.dumps(entries)
+
+
+def delete_entry(id):
+    with sqlite3.connect('../../dailyjournal.db') as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM entries
+        WHERE id = ?
+        """, (id, ))
