@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from entries import delete_entry, get_all_entries, get_single_entry
+from entries import delete_entry, get_all_entries, get_entry_by_query, get_single_entry
+from moods import delete_mood, get_all_moods, get_single_mood
 import json
 
 # from animals import create_animal, delete_animal, get_all_animals, get_animals_by_location, get_animals_by_status, get_single_animal, update_animal
@@ -68,29 +69,23 @@ class HandleRequests(BaseHTTPRequestHandler):
             if resource == 'entries':
                 if id is not None:
                     response = f"{get_single_entry(id)}"
-                    pass
                 else:
                     response = f"{get_all_entries()}"
+            elif resource == 'moods':
+                if id is not None:
+                    response = f"{get_single_mood(id)}"
+                else:
+                    response = f"{get_all_moods()}"
 
-        # Response from parse_url() is a tuple with 3
-        # items in it, which means the request was for
-        # `/resource?parameter=value`
+        # Handle query params
+        elif len(parsed) == 3:
+            (resource, key, value) = parsed
 
-        # elif len(parsed) == 3:
-        #     (resource, key, value) = parsed
-
-            # Is the resource `customers` and was there a
-            # query parameter that specified the customer
-            # email as a filtering value?
-
-            # if key == "email" and resource == "customers":
-            #     response = get_customers_by_email(value)
-            # if key == "location_id" and resource == "animals":
-            #     response = get_animals_by_location(value)
-            # if key == 'status' and resource == 'animals':
-            #     response = get_animals_by_status(value)
-            # if key == "location_id" and resource == "employees":
-            #     response = get_employees_by_location(value)
+            if key == "q" and resource == "entries":
+                if value:
+                    response = get_entry_by_query(value)
+                else:
+                    response = get_all_entries()
 
         self.wfile.write(response.encode())
 
@@ -173,6 +168,14 @@ class HandleRequests(BaseHTTPRequestHandler):
         #     delete_location(id)
 
         self.wfile.write("".encode())
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods',
+                         'GET, POST, PUT, DELETE')
+        self.send_header('Access-Control-Allow-Headers', 'X-Requested-With')
+        self.end_headers()
 
 
 # This function is not inside the class. It is the starting
