@@ -3,13 +3,9 @@ from entries import delete_entry, get_all_entries, get_entry_by_query, get_singl
 from moods import delete_mood, get_all_moods, get_single_mood
 import json
 
-# from animals import create_animal, delete_animal, get_all_animals, get_animals_by_location, get_animals_by_status, get_single_animal, update_animal
-# from locations import create_location, delete_location, get_all_locations, get_single_location, update_location
-# from employees import create_employee, delete_employee, get_all_employees, get_employees_by_location, get_single_employee, update_employee
-# from customers import create_customer, delete_customer, get_all_customers, get_customers_by_email, get_single_customer, update_customer
-
-
 # Here's a class. It inherits from another class.
+
+
 class HandleRequests(BaseHTTPRequestHandler):
 
     def parse_url(self, path):
