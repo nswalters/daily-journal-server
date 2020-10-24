@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from entries import delete_entry, get_all_entries, get_entry_by_query, get_single_entry
+from entries import create_journal_entry, delete_entry, get_all_entries, get_entry_by_query, get_single_entry
 from moods import delete_mood, get_all_moods, get_single_mood
 import json
 
@@ -99,32 +99,39 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Initialize new animal
-        new_animal = None
+        # Initialize new entry
+        new_entry = None
 
-        # Add a new animal to the list. Don't worry about
-        # the orange squiggle, you'll define the create_anmial
-        # function next.
-        if resource == "animals":
-            new_animal = create_animal(post_body)
+        if resource == "entries":
+            new_entry = create_journal_entry(post_body)
+            self.wfile.write(f"{new_entry}".encode())
 
-            # Encode the new animal and send in response
-            self.wfile.write(f"{new_animal}".encode())
+        # # Initialize new animal
+        # new_animal = None
 
-        if resource == "locations":
-            new_location = create_location(post_body)
+        # # Add a new animal to the list. Don't worry about
+        # # the orange squiggle, you'll define the create_anmial
+        # # function next.
+        # if resource == "animals":
+        #     new_animal = create_animal(post_body)
 
-            self.wfile.write(f"{new_location}".encode())
+        #     # Encode the new animal and send in response
+        #     self.wfile.write(f"{new_animal}".encode())
 
-        if resource == "employees":
-            new_employee = create_employee(post_body)
+        # if resource == "locations":
+        #     new_location = create_location(post_body)
 
-            self.wfile.write(f"{new_employee}".encode())
+        #     self.wfile.write(f"{new_location}".encode())
 
-        if resource == "customers":
-            new_customer = create_customer(post_body)
+        # if resource == "employees":
+        #     new_employee = create_employee(post_body)
 
-            self.wfile.write(f"{new_customer}".encode())
+        #     self.wfile.write(f"{new_employee}".encode())
+
+        # if resource == "customers":
+        #     new_customer = create_customer(post_body)
+
+        #     self.wfile.write(f"{new_customer}".encode())
 
     # Here's a method on the class that overrides the parent's method.
     # It handles any PUT request.
